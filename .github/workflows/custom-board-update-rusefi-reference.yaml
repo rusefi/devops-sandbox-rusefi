@@ -1,3 +1,7 @@
+#
+#
+#
+
 name: Update rusEFI Reference
 
 on:
@@ -24,7 +28,8 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub git update Action"
-          OUT=$(git add ext/devops-sandbox-rusefi 2>&1) || echo "commit failed, finding out why"
+          git add ext/devops-sandbox-rusefi
+          OUT=$(git commit -am "GHA says update ext/devops-sandbox-rusefi submodule" 2>&1) || echo "commit failed, finding out why"
           if echo "$OUT" | grep 'nothing to commit'; then
             echo "submodule: looks like nothing to commit"
             echo "NOCOMMIT=true" >> $GITHUB_ENV
@@ -33,7 +38,7 @@ jobs:
             echo "submodule: looks like something has changed"
             exit 0
           else
-            echo "submodule: looks like something unexpected"
+            echo "submodule: looks like something unexpected [$OUT]"
             exit 1
           fi
           git status
