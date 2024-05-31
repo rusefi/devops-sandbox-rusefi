@@ -14,11 +14,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Git Checkout Submodules
+      - name: Git Checkout Submodule
         run: |
           git submodule update --init --depth=1 ext/devops-sandbox-rusefi
 
-      - name: Git Update Submodules
+      - name: Git Update Submodule
         run: |
           git submodule update --remote
 
