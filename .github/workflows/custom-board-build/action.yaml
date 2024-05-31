@@ -11,10 +11,10 @@ runs:
     - name: Upload Bundle
       shell: bash
       run: |
-        if [ "${{github.ref}}" = "refs/heads/master" ]; then
-          echo "On master branch"
+        if [ "${{github.ref}}" = "refs/heads/main" ]; then
+          echo "On main branch"
         elif [[ ${{github.ref}} == "lts"* ]]; then
-          echo "On LTS branch [${{github.ref}}]
+          echo "On LTS branch [${{github.ref}}]"
           echo AUTOMATION_LTS=true >> $GITHUB_ENV
           echo AUTOMATION_REF=${{github.ref_name}} >> $GITHUB_ENV
         else
