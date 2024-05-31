@@ -1,0 +1,23 @@
+name: Build Custom Board Firmware
+
+runs:
+  using: "composite"
+  steps:
+    - name: Check branch name
+      shell: bash
+      if: ${{ contains(github.ref_name, '.') }}
+      run: echo '::error::Branch names must not contain ".", this breaks firmware autoupdates.' && exit 1
+
+    - name: Upload Bundle
+      shell: bash
+      run: |
+        if [ "${{github.ref}}" = "refs/heads/master" ]; then
+          echo "On master branch"
+        elif [[ ${{github.ref}} == "lts"* ]]; then
+          echo "On LTS branch [${{github.ref}}]
+          echo AUTOMATION_LTS=true >> $GITHUB_ENV
+          echo AUTOMATION_REF=${{github.ref_name}} >> $GITHUB_ENV
+        else
+          echo "Not uploading [${{github.ref}}]"
+          exit 0
+        fi
